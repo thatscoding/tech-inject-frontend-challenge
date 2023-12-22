@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Infant:ital,wght@0,300;1,600&family=Inter&family=Philosopher&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+  .font-inter{
+    font-family: 'Cormorant Infant', serif;
+    /* font-family: 'Inter', sans-serif;
+    font-family: 'Philosopher', sans-serif; */
+  }
+
+.blurComponent{
+    z-index: 20;
+}
+
+ul>li{
+  cursor: pointer;
+}
+
+  .blur{
+    width: 22rem;
+    height: 14rem;
+    filter: blur(72px);
+    z-index: 1;
+    background: #edd0ff;
+    border-radius: 50%;
+
+}
+
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+
+
