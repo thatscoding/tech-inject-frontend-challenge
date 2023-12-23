@@ -4,7 +4,7 @@
 # Inject Tech Fronted Challenge
 
 ## Technologies used :
- #### Frontedn : React using vite, Tailwind CSS,
+ #### Frontedn : React using vite, Tailwind CSS, TypeScipt
  #### Auth Service : Firebase (Authentication)
  #### Deployment : Netlify
 
