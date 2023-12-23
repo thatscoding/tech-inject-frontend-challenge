@@ -3,7 +3,7 @@ import bottle from "../assets/bottle.png";
 function List({ price }: { price: number }) {
   return (
     <div className="flex">
-      <div className="pb-8 lg:pb-0 md:w-[60%] w-full border-l border-t flex flex-col pt-20  px-4 h-full">
+      <div className="pb-8 lg:pb-0 md:w-[60%] w-full border-l  border-t flex flex-col pt-20  px-4 h-full">
         <div className="">
           <span className="flex justify-center w-full ">
             <img src={bottle} alt="wine" className=" h-80" />
@@ -22,7 +22,7 @@ function List({ price }: { price: number }) {
           </div>
         </div>
       </div>
-      <div className="w-[40%] border h-full sm:flex pt-20 px-4 hidden ">
+      <div className="w-[40%] border-l h-full sm:flex pt-20 px-4 hidden ">
         <span className="flex justify-end w-full ">
           <img src={bottle} alt="wine" className="h-80" />
         </span>

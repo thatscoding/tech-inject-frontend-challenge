@@ -23,6 +23,12 @@ function Register() {
     console.log(data);
     setLoading(true);
 
+    setError("");
+    if (!data.email && !data.password) {
+      setLoading(false);
+      return setError("All fields are required.");
+    }
+
     try {
       setError("");
       await login(data.email, data.password);

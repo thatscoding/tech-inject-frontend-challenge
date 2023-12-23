@@ -16,8 +16,20 @@ import { useState } from "react";
 
 function Home() {
   const [error, setError] = useState("");
+  const [theme, setTheme] = useState(1);
   const { currentUser, logout } = useUserAuth();
   const navigate = useNavigate();
+
+  const handleTheme = () => {
+    console.log(theme);
+    setTheme((prev) => {
+      const ans = prev + 1;
+      if (ans % 4 == 0) {
+        return 1;
+      }
+      return ans % 4;
+    });
+  };
 
   const myArray = [1, 2, 3, 4, 5];
 
@@ -36,9 +48,27 @@ function Home() {
   }
 
   return (
-    <div className="bg-[#DBD4C1] px-2 md:px-20 py-10 h-full lg:h-screen">
+    <div
+      className={`
+    ${theme === 1 && "bg-[#DBD4C1] duration-700 ease-in-out"}
+    ${
+      theme === 2 &&
+      "bg-[#781E1E] text-[white!importanat] duration-700 ease-in-out"
+    }
+    ${theme === 3 && "bg-[#DAB0A4] duration-700 ease-in-out"}
+     px-2 md:px-20 py-10 h-full lg:h-screen
+
+     
+  `}
+    >
       <div className="container mx-auto xl:max-w-7xl h-full">
-        <div className="bg-[#F9F4E4]">
+        <div
+          className={`
+        ${theme === 1 && "bg-[#F9F4E5] duration-700 ease-in-out"}
+        ${theme === 2 && "bg-[#AF2323] duration-700 ease-in-out"}
+        ${theme === 3 && "bg-[#FECDBE] duration-700 ease-in-out"}
+      `}
+        >
           <div className=" relative h-full overflow-hidden z-50">
             <Navbar email={currentUser?.email} handleLogout={handleLogout} />
 
@@ -159,12 +189,15 @@ function Home() {
             background: "rgb(238,210,255)",
           }}
         ></div>
+
         <button
+          onClick={() => handleTheme()}
           className="hidden lg:block absolute  border-2 rounded-full w-16 h-16 "
           style={{
             borderColor: "rgb(238,210,255)",
             right: "21%",
             top: "25%",
+            zIndex: 999999,
           }}
         >
           Next
