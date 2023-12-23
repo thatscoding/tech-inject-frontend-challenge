@@ -53,7 +53,7 @@ function Home() {
     ${theme === 1 && "bg-[#DBD4C1] duration-700 ease-in-out"}
     ${
       theme === 2 &&
-      "bg-[#781E1E] text-[white!importanat] duration-700 ease-in-out"
+      "bg-[#781E1E] text-[white!importanat] duration-700 ease-in-out text-white"
     }
     ${theme === 3 && "bg-[#DAB0A4] duration-700 ease-in-out"}
      px-2 md:px-20 py-10 h-full lg:h-screen
