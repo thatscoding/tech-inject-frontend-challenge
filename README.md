@@ -1,5 +1,38 @@
 # React + TypeScript + Vite
 
+
+# Inject Tech Fronted Challenge
+
+## Technologies used :
+ #### Frontedn : React using vite, Tailwind CSS,
+ #### Auth Service : Firebase (Authentication)
+ #### Deployment : Netlify
+
+
+## Project Setup 
+
+### Clone from github
+
+#### To Clone this project run
+
+```bash
+  git clone https://github.com/thatscoding/tech-inject-frontend-challenge.git
+```
+#### Install packages
+
+```bash
+  yarn install
+```
+#### Run project
+
+```bash
+  yarn run dev
+```
+### Deoployment Link 
+[https://mywinestore.netlify.app/]
+
+
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
