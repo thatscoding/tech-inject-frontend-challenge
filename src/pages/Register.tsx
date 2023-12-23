@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useState } from "react";
 
 type Inputs = {
   email: string;
@@ -9,10 +10,31 @@ type Inputs = {
 };
 
 function Register() {
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
+
   const { register, handleSubmit } = useForm<Inputs>();
 
   const onsubmit = handleSubmit(async (data) => {
     console.log(data);
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const isValidEmail = emailRegex.test(data.email);
+    if (!isValidEmail) {
+      return setError("Email is not correct.");
+    }
+
+    if (data.password !== data.confirmPassword) {
+      return setError("Password doen't matched.");
+    }
+
+    try {
+      setError("");
+      setLoading(true);
+    } catch (error) {
+      setError("Error whiling creating an Account.");
+    }
+    setLoading(false);
   });
 
   return (
@@ -33,6 +55,12 @@ function Register() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+          {error && (
+            <h1 className="bg-red-200 text-red-500 font-semibold text-lg flex justify-center py-2">
+              {error}
+            </h1>
+          )}
+
           <div className="space-y-6">
             <div>
               <label
@@ -49,7 +77,7 @@ function Register() {
                   type="email"
                   autoComplete="email"
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block pl-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -58,7 +86,7 @@ function Register() {
               <div className="flex items-center justify-between">
                 <label
                   htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-gray-900"
+                  className="block  text-sm font-medium leading-6 text-gray-900"
                 >
                   Password
                 </label>
@@ -71,7 +99,7 @@ function Register() {
                   type="password"
                   autoComplete="current-password"
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block pl-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -93,7 +121,7 @@ function Register() {
                   type="password"
                   autoComplete="confirm-password"
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block pl-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
