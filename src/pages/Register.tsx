@@ -1,7 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useState } from "react";
+import { useUserAuth } from "../services/contexts/AuthContext.jsx";
+import { HashLoader } from "react-spinners";
 
 type Inputs = {
   email: string;
@@ -11,31 +13,57 @@ type Inputs = {
 
 function Register() {
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const { signup } = useUserAuth();
+
+  const navigate = useNavigate();
 
   const { register, handleSubmit } = useForm<Inputs>();
 
   const onsubmit = handleSubmit(async (data) => {
     console.log(data);
+    setLoading(true);
+
+    setError("");
+    if (!data.email && !data.password && !data.confirmPassword) {
+      setLoading(false);
+      return setError("All fields are required.");
+    }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const isValidEmail = emailRegex.test(data.email);
     if (!isValidEmail) {
+      setLoading(false);
+
       return setError("Email is not correct.");
     }
 
     if (data.password !== data.confirmPassword) {
+      setLoading(false);
+
       return setError("Password doen't matched.");
     }
 
     try {
       setError("");
-      setLoading(true);
-    } catch (error) {
-      setError("Error whiling creating an Account.");
+      await signup(data.email, data.password);
+      setLoading(false);
+
+      navigate("/login");
+    } catch (error: any) {
+      console.log(error?.message);
+      setError(error?.message);
+      setLoading(false);
     }
-    setLoading(false);
   });
+
+  if (loading) {
+    return (
+      <div className="w-full h-screen flex justify-center items-center">
+        <HashLoader color="#36d7b7" />
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -56,7 +84,7 @@ function Register() {
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           {error && (
-            <h1 className="bg-red-200 text-red-500 font-semibold text-lg flex justify-center py-2">
+            <h1 className="bg-red-200 text-red-500 font-semibold text-lg text-center py-2 px-4">
               {error}
             </h1>
           )}

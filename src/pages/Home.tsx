@@ -1,6 +1,7 @@
 import Navbar from "../components/Navbar";
 
 import { Swiper, SwiperSlide } from "swiper/react";
+import { useUserAuth } from "../services/contexts/AuthContext.jsx";
 
 // Import Swiper styles
 import "swiper/css";
@@ -10,16 +11,36 @@ import "swiper/css/navigation";
 // import required modules
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import List from "../components/List";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 function Home() {
+  const [error, setError] = useState("");
+  const { currentUser, logout } = useUserAuth();
+  const navigate = useNavigate();
+
   const myArray = [1, 2, 3, 4, 5];
+
+  async function handleLogout() {
+    setError("");
+
+    try {
+      await logout();
+      navigate("/login");
+    } catch {
+      setError("Failed to log out");
+    }
+    if (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <div className="bg-[#DBD4C1] px-2 md:px-20 py-10 h-full lg:h-screen">
       <div className="container mx-auto xl:max-w-7xl h-full">
         <div className="bg-[#F9F4E4]">
           <div className=" relative h-full overflow-hidden z-50">
-            <Navbar />
+            <Navbar email={currentUser?.email} handleLogout={handleLogout} />
 
             <div className="flex h-full">
               <div className="w-full lg:w-[55%] border  pb-10 ">
@@ -61,16 +82,20 @@ function Home() {
                       <h2 className="font-semibold text-base">
                         Come to the Wine-tasting
                       </h2>
-                      <p className="text-[0.8rem] w-full sm:w-80 ">
+                      <p className="text-[0.8rem] w-full sm:w-80  lg:w-60 2xl:w-80 ">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit.
                         Impedit, commodi possimus repudiandae optio nemo nulla?
                       </p>
+
+                      <button className="mx-10 hidden lg:block xl:hidden  w-32 xl:w-40 2xl:w-32  h-10 border rounded-full mt-4 border-gray-500">
+                        Read more
+                      </button>
                     </div>
-                    <button className="hidden md:block w-32 h-10 border rounded-full mt-8 border-gray-500">
+                    <button className="hidden md:block lg:hidden xl:block w-32 h-10 border rounded-full mt-8 border-gray-500">
                       Read more
                     </button>
                   </div>
-                  <button className="mx-10 md:hidden w-32 h-10 border rounded-full mt-4 border-gray-500">
+                  <button className="mx-10 md:hidden  w-32 xl:w-40 2xl:w-32  h-10 border rounded-full mt-4 border-gray-500">
                     Read more
                   </button>
                 </div>

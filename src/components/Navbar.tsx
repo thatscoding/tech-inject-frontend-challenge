@@ -4,7 +4,12 @@ import { FaShoppingBag } from "react-icons/fa";
 import { FaEuroSign } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-function Navbar() {
+type NavbarProps = {
+  email: string | null;
+  handleLogout: () => void;
+};
+
+function Navbar({ email, handleLogout }: NavbarProps) {
   return (
     <div>
       <div className="flex h-20 border w-full items-center">
@@ -23,9 +28,18 @@ function Navbar() {
               <li className="hover:text-[#609ca9] ease-in-out duration-150">
                 Our Story
               </li>
-              <li className="hover:text-[#609ca9] ease-in-out duration-150">
-                <Link to={"/login"}>Login</Link>
-              </li>
+              {email ? (
+                <li
+                  onClick={() => handleLogout()}
+                  className="hover:text-[#609ca9] ease-in-out duration-150"
+                >
+                  logout
+                </li>
+              ) : (
+                <li className="hover:text-[#609ca9] ease-in-out duration-150">
+                  <Link to={"/login"}>Login</Link>
+                </li>
+              )}
             </ul>
           </div>
         </div>
@@ -36,6 +50,9 @@ function Navbar() {
               <span>
                 <IoCaretDown />
               </span>
+              {email !== null && email !== undefined && (
+                <span className="truncate w-20">{email}</span>
+              )}
             </div>
             <div className="cursor-pointer">
               <RxHamburgerMenu />
@@ -53,7 +70,21 @@ function Navbar() {
             </div>
           </div>
         </div>
-        <div className="cursor-pointer lg:hidden pr-6">
+        <div className="cursor-pointer lg:hidden pr-6 flex gap-4">
+          <ul>
+            {email ? (
+              <li
+                onClick={() => handleLogout()}
+                className="hover:text-[#609ca9] ease-in-out duration-150"
+              >
+                logout
+              </li>
+            ) : (
+              <li className="hover:text-[#609ca9] ease-in-out duration-150">
+                <Link to={"/login"}>Login</Link>
+              </li>
+            )}
+          </ul>
           <RxHamburgerMenu size={30} />
         </div>
       </div>
